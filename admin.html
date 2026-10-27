@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Brautpaar Admin | Bert & Bine</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+  <!-- Admin Header -->
+  <header class="admin-header">
+    <div class="admin-title">
+      <span>Bine & Bert</span>
+      <span>|</span>
+      <span>Gästeverwaltung</span>
+    </div>
+    <div class="admin-header-actions">
+      <a href="/" class="btn-admin btn-admin-secondary" target="_blank" rel="noopener">Zur Webseite ↗</a>
+      <a href="personen.html" class="btn-admin btn-admin-secondary">Personen</a>
+      <a href="gruppen.html" class="btn-admin btn-admin-secondary">Gruppen</a>
+      <a href="planer/index.html" class="btn-admin btn-admin-primary">Tischplan</a>
+      <a href="qrliste.html" class="btn-admin btn-admin-secondary">QR-Liste</a>
+      <a href="/api/admin/export/csv" class="btn-admin btn-admin-secondary" id="btn-export-csv">
+        📥 CSV Export (Excel/Catering)
+      </a>
+      <button type="button" class="btn-admin btn-admin-danger" id="btn-admin-logout" style="display: none;">
+        Abmelden
+      </button>
+    </div>
+  </header>
+
+  <!-- LOGIN SECTION (If not logged in) -->
+  <section id="admin-login-section" class="login-wrapper">
+    <h2>Brautpaar Login</h2>
+    <p style="color: var(--admin-text-muted); font-size: 0.95rem;">
+      Bitte gib das Admin-Passwort ein, um die Rückmeldungen eurer Gäste einzusehen.
+    </p>
+
+    <form id="admin-login-form" class="login-form">
+      <input 
+        type="password" 
+        id="admin-password" 
+        class="login-input" 
+        placeholder="Passwort eingeben" 
+        required 
+        autocomplete="current-password"
+      >
+      <button type="submit" class="btn-admin btn-admin-primary" style="justify-content: center; padding: 0.8rem;">
+        Anmelden
+      </button>
+      <div id="admin-login-error" class="alert alert-danger" style="display: none; color: #dc2626; font-size: 0.85rem;"></div>
+      <p style="font-size: 0.8rem; color: var(--admin-text-muted); margin-top: 1rem;">
+        Das Admin-Passwort wird beim Hoster hinterlegt und nicht im Browser gespeichert.
+      </p>
+    </form>
+  </section>
+
+  <!-- DASHBOARD SECTION (Shown when logged in) -->
+  <main id="admin-dashboard-section" class="admin-container" style="display: none;">
+    
+    <!-- METRICS CARDS -->
+    <div class="metrics-grid">
+      
+      <div class="metric-card">
+        <div class="metric-icon icon-gold">💌</div>
+        <div class="metric-data">
+          <h4>Eingeladene Parteien</h4>
+          <div class="number" id="metric-total-parties">0</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon icon-green">👥</div>
+        <div class="metric-data">
+          <h4>Zugesagte Personen</h4>
+          <div class="number" id="metric-confirmed-persons" style="color: var(--color-success);">0</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon icon-blue">✓</div>
+        <div class="metric-data">
+          <h4>Zusagen (Parteien)</h4>
+          <div class="number" id="metric-confirmed-parties">0</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon icon-red">✕</div>
+        <div class="metric-data">
+          <h4>Absagen</h4>
+          <div class="number" id="metric-declined-parties" style="color: var(--color-danger);">0</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon icon-yellow">⏱</div>
+        <div class="metric-data">
+          <h4>Noch offen</h4>
+          <div class="number" id="metric-pending-parties" style="color: var(--color-warning);">0</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CATERING & FOOD BREAKDOWN CARD -->
+    <div class="card">
+      <div class="card-header">
+        <h3>🍽️ Speisenübersicht für den Caterer</h3>
+      </div>
+      <div class="card-body">
+        <div id="dishes-grid" class="dishes-admin-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+    <!-- GUESTS TABLE CARD -->
+    <div class="card card-table-wrap">
+      <div class="card-header">
+        <h3>📋 Detaillierte Gästeliste</h3>
+        
+        <div class="filter-bar">
+          <input 
+            type="text" 
+            id="admin-search-input" 
+            class="search-input" 
+            placeholder="Suche nach Name, Code oder Person..."
+          >
+          <div class="status-filter-buttons">
+            <button type="button" class="filter-btn active" data-filter="all">Alle</button>
+            <button type="button" class="filter-btn" data-filter="attending">Zugesagt</button>
+            <button type="button" class="filter-btn" data-filter="declined">Abgesagt</button>
+            <button type="button" class="filter-btn" data-filter="pending">Offen</button>
+          </div>
+          <button type="button" class="btn-admin btn-admin-secondary" id="btn-toggle-qr">
+            QR-Codes anzeigen
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Eingeladener Gast</th>
+              <th>Status</th>
+              <th>Personen & Speisen</th>
+              <th>Kommentar</th>
+              <th>Aktion</th>
+            </tr>
+          </thead>
+          <tbody id="guests-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- QR CODES SECTION (Hidden by default, toggled via button) -->
+    <div id="admin-qr-section" class="card" style="display: none;">
+      <div class="card-header">
+        <h3>🔲 QR-Codes für Druck der Einladungskarten</h3>
+        <p style="font-size: 0.85rem; color: var(--admin-text-muted); margin: 0;">
+          Diese QR-Codes führen direkt auf die persönliche Seite des Gasts (ohne manuelle Code-Eingabe).
+        </p>
+      </div>
+      <div class="card-body">
+        <div id="qr-grid" class="qr-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- GUEST DETAILS MODAL -->
+  <div id="guest-modal-overlay" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <button type="button" id="guest-modal-close" class="modal-close">✕</button>
+      <div id="guest-modal-body">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

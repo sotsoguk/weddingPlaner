@@ -1,0 +1,22 @@
+{
+  "name": "hochzeit-bert-und-bine",
+  "version": "1.0.0",
+  "description": "Hochzeits-Webapp für Bert & Bine - RSVP und Gästeverwaltung",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "generate-qr": "node scripts/generate-qrcodes.js"
+  },
+  "keywords": ["wedding", "rsvp", "hochzeit", "bertundbine"],
+  "author": "Bert & Bine",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^12.11.1",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "qrcode": "^1.5.4"
+  }
+}

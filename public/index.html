@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BERT + SABINE | 20 · 03 · 27</title>
+  <meta name="description" content="Offizielle Hochzeits-Webseite von Bert + Sabine. Alle Informationen zu Trauung, Feier, Zeitplan und RSVP Rückmeldung.">
+  
+  <!-- Open Graph / Social Media Vorschau (WhatsApp, iMessage, Facebook) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hochzeit.bertundbine.de/">
+  <meta property="og:title" content="BERT + SABINE | 20 · 03 · 27">
+  <meta property="og:description" content="Offizielle Hochzeits-Webseite von Bert + Sabine. Alle Informationen zu Trauung, Feier, Zeitplan und RSVP Rückmeldung.">
+  <meta property="og:image" content="https://hochzeit.bertundbine.de/og-image.jpg">
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BERT + SABINE | 20 · 03 · 27">
+  <meta name="twitter:description" content="Offizielle Hochzeits-Webseite von Bert + Sabine. Alle Informationen zu Trauung, Feier, Zeitplan und RSVP Rückmeldung.">
+  <meta name="twitter:image" content="https://hochzeit.bertundbine.de/og-image.jpg">
+  
+  <!-- Minimalist Monogram Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23111111'/><text x='50%' y='62%' font-family='serif' font-size='50' fill='%23ffffff' text-anchor='middle'>B&S</text></svg>">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">
+        <span>BERT + SABINE</span>
+        <span class="dot">·</span>
+        <span>20 · 03 · 27</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#locations">Orte</a></li>
+        <li><a href="#timeline">Ablauf</a></li>
+        <li><a href="#faq">Infos</a></li>
+        <li><a href="#rsvp" class="nav-btn-rsvp">Rückmeldung (RSVP)</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    
+    <!-- Save the Date Physical Card Recreation -->
+    <div class="save-the-date-card">
+      <div class="std-title-wrap">
+        <div class="std-word">SAVE</div>
+        <div class="std-script">the</div>
+        <div class="std-word">DATE</div>
+      </div>
+      
+      <div class="std-footer">
+        <div class="std-couple">BERT + SABINE</div>
+        <div class="std-date">20 · 03 · 27</div>
+      </div>
+    </div>
+
+    <!-- Back-of-Card Script Lead -->
+    <div class="hero-script-lead">wir sagen ja</div>
+    
+    <p class="hero-subtext">
+      Das möchten wir gemeinsam mit Euch feiern. Bitte gebt uns bis zum <strong>02. Januar 2027</strong> Bescheid, ob ihr diesen besonderen Tag mit uns verbringt.
+    </p>
+
+    <!-- Countdown Timer -->
+    <div class="countdown-box">
+      <div class="countdown-item">
+        <div class="countdown-number" id="cd-days">-</div>
+        <div class="countdown-label">Tage</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="cd-hours">-</div>
+        <div class="countdown-label">Stunden</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="cd-mins">-</div>
+        <div class="countdown-label">Minuten</div>
+      </div>
+    </div>
+
+    <a href="#rsvp" class="btn-primary" style="font-size: 0.95rem; padding: 1.1rem 2.6rem;">
+      Rückmeldung abgeben (RSVP)
+    </a>
+  </header>
+
+  <!-- RSVP Section (Main Feature) -->
+  <section id="rsvp" class="rsvp-section">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-tag">Rückmeldung</span>
+        <h2>Seid ihr dabei?</h2>
+        <p>Bitte gebt uns bis zum <strong>02. Januar 2027</strong> eure Rückmeldung.</p>
+      </div>
+
+      <div class="rsvp-card">
+
+        <!-- STEP 1: Code Login -->
+        <div id="rsvp-code-step" class="rsvp-login-step">
+          <span class="tracked-caps" style="display: block; margin-bottom: 0.8rem;">Persönlicher Gästecode</span>
+          <p class="rsvp-help-text">
+            Den Code findest du auf deiner gedruckten Einladungskarte (auch als QR-Code).
+          </p>
+
+          <div class="code-input-group">
+            <input 
+              type="text" 
+              id="guest-code-input" 
+              class="code-input" 
+              placeholder="z.B. sonne-mond-stern" 
+              maxlength="60"
+              autocomplete="off"
+              autocapitalize="none"
+            >
+            <button type="button" id="btn-check-code" class="btn-primary">
+              Weiter
+            </button>
+          </div>
+
+          <div id="code-error" class="alert alert-danger" style="display: none;"></div>
+
+          <p class="rsvp-help-text" style="margin-top: 1.5rem; font-size: 0.85rem;">
+            💡 <em>Tipp: Hast du den QR-Code mit der Handykamera gescannt? Dann bist du normalerweise bereits direkt angemeldet!</em>
+          </p>
+        </div>
+
+        <!-- STEP 2: Main RSVP Form (Hidden by default) -->
+        <div id="rsvp-form-step" style="display: none;">
+          
+          <div class="guest-greeting-header">
+            <div>
+              <h3 id="guest-name-heading" class="guest-names-title">Liebe Gäste</h3>
+              <p style="margin-top: 0.3rem;">Wir freuen uns sehr auf diesen Tag mit euch.</p>
+            </div>
+            <span id="guest-code-badge" class="badge-code">Code: -</span>
+          </div>
+
+          <div id="existing-status-alert" class="alert alert-info" style="display: none;"></div>
+          <div id="form-error" class="alert alert-danger" style="display: none;"></div>
+
+          <form id="rsvp-main-form">
+            
+            <!-- Decision Toggle -->
+            <label class="form-label" style="margin-bottom: 0.8rem;">
+              Eure Rückmeldung:
+            </label>
+            <div class="decision-toggle">
+              <label class="toggle-option">
+                <input type="radio" name="rsvp_status" id="status-attending" value="attending" checked>
+                <div class="toggle-card accept">
+                  <span class="icon">✨</span>
+                  <span class="title">Wir kommen gerne!</span>
+                  <small style="color: var(--color-ink-muted);">Wir feiern gerne mit euch</small>
+                </div>
+              </label>
+
+              <label class="toggle-option">
+                <input type="radio" name="rsvp_status" id="status-declined" value="declined">
+                <div class="toggle-card decline">
+                  <span class="icon">💌</span>
+                  <span class="title">Können leider nicht</span>
+                  <small style="color: var(--color-ink-muted);">Wir schaffen es leider nicht</small>
+                </div>
+              </label>
+            </div>
+
+            <!-- Details when Attending -->
+            <div id="attending-details-box">
+              
+              <div class="attendees-section">
+                <div class="attendees-header">
+                  <h4 class="serif-title" style="font-size: 1.35rem;">Teilnehmende Personen & Menüauswahl</h4>
+                  <button type="button" id="btn-add-attendee" class="btn-secondary btn-sm">
+                    + Person hinzufügen
+                  </button>
+                </div>
+                <p style="font-size: 0.9rem; margin-bottom: 1.5rem; color: var(--color-ink-muted);">
+                  Tragt bitte den Namen jeder Person ein und wählt die gewünschte Speise aus.
+                </p>
+
+                <!-- Dynamic Attendees Container -->
+                <div id="attendees-container"></div>
+              </div>
+
+            </div>
+
+            <!-- Details when Declined -->
+            <div id="declined-details-box" style="display: none; margin-bottom: 2rem;">
+              <p style="font-size: 0.95rem; color: var(--color-ink-muted);">
+                Sehr schade, dass ihr nicht dabei sein könnt! Wenn ihr möchtet, hinterlasst uns unten gerne noch ein paar Worte.
+              </p>
+            </div>
+
+            <!-- Global Comment Box -->
+            <div class="comment-section">
+              <label for="rsvp-comment" class="form-label">
+                Nachricht an das Brautpaar (Musikwünsche, Grußworte, etc.):
+              </label>
+              <textarea 
+                id="rsvp-comment" 
+                class="form-textarea" 
+                placeholder="Schreibt uns hier gerne, worauf ihr euch freut oder was wir wissen sollten..."
+              ></textarea>
+            </div>
+
+            <!-- Actions -->
+            <div class="form-actions">
+              <button type="submit" id="btn-submit-rsvp" class="btn-primary" style="font-size: 0.95rem; width: 100%; max-width: 380px;">
+                Rückmeldung absenden
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+
+        <!-- STEP 3: Success Confirmation Screen -->
+        <div id="rsvp-success-step" style="display: none;" class="confirmation-box">
+          <div class="confirmation-icon">🥂</div>
+          <div class="script-text" style="margin-bottom: 0.5rem;">vielen dank</div>
+          <h3 id="success-title" style="margin-bottom: 1rem;">Wir freuen uns auf euch!</h3>
+          <p id="success-message" style="margin-bottom: 2rem; font-size: 1.05rem;">
+            Deine Rückmeldung wurde erfolgreich gespeichert.
+          </p>
+          <button type="button" id="btn-edit-rsvp" class="btn-secondary">
+            Angaben bearbeiten
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Locations Section -->
+  <section id="locations">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">20 · 03 · 27</span>
+        <h2>Wo & Wann</h2>
+        <p>Alle wichtigen Orte und Zeiten für unsere Hochzeit im Überblick.</p>
+      </div>
+
+      <div class="location-grid">
+        <!-- Location 1: Trauung -->
+        <div class="location-card">
+          <span class="location-type-badge">Standesamtliche Trauung</span>
+          <h3>St. Laurentius Kirche</h3>
+          <div class="location-time">14:00 Uhr</div>
+          <p class="location-address">
+            Kirchplatz 1<br>
+            80331 München
+          </p>
+          <p style="font-size: 0.9rem;">
+            Bitte findet euch ca. 15–20 Minuten vor Beginn ein, damit wir gemeinsam und pünktlich beginnen können.
+          </p>
+          <a href="https://maps.google.com/?q=St.+Laurentius+Kirche" target="_blank" rel="noopener" class="btn-secondary location-btn">
+            In Google Maps öffnen ↗
+          </a>
+        </div>
+
+        <!-- Location 2: Feier -->
+        <div class="location-card">
+          <span class="location-type-badge">Empfang & Feier</span>
+          <h3>Gutshof am See</h3>
+          <div class="location-time">ab 15:30 Uhr</div>
+          <p class="location-address">
+            Seepromenade 12<br>
+            82319 Starnberg
+          </p>
+          <p style="font-size: 0.9rem;">
+            Sektempfang, Anschneiden der Hochzeitstorte, festliches Dinner und Party. Parkplätze sind vorhanden.
+          </p>
+          <a href="https://maps.google.com/?q=Gutshof+am+See" target="_blank" rel="noopener" class="btn-secondary location-btn">
+            In Google Maps öffnen ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section id="timeline" style="background-color: var(--color-paper-subtle);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Tagesablauf</span>
+        <h2>Unser Zeitplan</h2>
+        <p>Ein kleiner Ausblick darauf, wie wir den Tag gemeinsam verbringen möchten.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-icon-bubble">1</div>
+          <div class="timeline-time">14:00 Uhr</div>
+          <div class="timeline-title">Trauung</div>
+          <p>Feierlicher Beginn und unser Ja-Wort.</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon-bubble">2</div>
+          <div class="timeline-time">15:30 Uhr</div>
+          <div class="timeline-title">Sektempfang & Torte</div>
+          <p>Ankunft an der Location, gemeinsames Anstoßen und Torte.</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon-bubble">3</div>
+          <div class="timeline-time">17:00 Uhr</div>
+          <div class="timeline-title">Fotos & Beisammensein</div>
+          <p>Gruppenfotos und Zeit für Gespräche im Park.</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon-bubble">4</div>
+          <div class="timeline-time">19:00 Uhr</div>
+          <div class="timeline-title">Hochzeitsdinner</div>
+          <p>Mehrgängiges Menü mit eurer individuellen Speisenauswahl.</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon-bubble">5</div>
+          <div class="timeline-time">21:30 Uhr</div>
+          <div class="timeline-title">Eröffnungstanz & Party</div>
+          <p>Musik, Drinks und ausgelassenes Feiern.</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon-bubble">6</div>
+          <div class="timeline-time">00:00 Uhr</div>
+          <div class="timeline-title">Mitternachtssnack</div>
+          <p>Stärkung für alle Nachtschwärmer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Informationen</span>
+        <h2>Wichtige Fragen & Antworten</h2>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-card">
+          <div class="faq-question">Dresscode</div>
+          <p>Wir freuen uns über <strong>festlich-elegante Kleidung</strong>. Weiß und Creme sind traditionell der Braut vorbehalten.</p>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question">Geschenke</div>
+          <p>Unser Haushalt ist komplett. Wenn ihr uns eine Freude machen möchtet, freuen wir uns über einen Beitrag zu unseren Flitterwochen.</p>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question">Übernachtung</div>
+          <p>Im Hotel Seeblick direkt nebenan haben wir ein Zimmerkontingent unter dem Stichwort <em>„Bert & Sabine“</em> reserviert.</p>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question">Rückmeldung bis</div>
+          <p>Bitte gebt uns bis zum <strong>02. Januar 2027</strong> Bescheid, damit wir die Planung und das Catering verbindlich vornehmen können.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-names">BERT & SABINE</div>
+      <div class="footer-script">wir sagen ja</div>
+      <p style="font-family: var(--font-serif); font-size: 1.3rem; letter-spacing: 0.15em; margin-bottom: 1.5rem;">
+        20 · 03 · 27
+      </p>
+      
+      <ul class="footer-links">
+        <li><a href="#locations">Orte</a></li>
+        <li><a href="#timeline">Ablauf</a></li>
+        <li><a href="#rsvp">Rückmeldung</a></li>
+        <li><a href="/admin.html">Brautpaar-Bereich</a></li>
+      </ul>
+
+      <div class="footer-address">
+        Bert Riffelmacher & Sabine Saal<br>
+        Sieh-Dich-Für-Weg 8 · 91154 Roth<br>
+        hochzeit.bertundbine.de
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+Contact: mailto:info@bertundbine.de
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: de, en
+Canonical: https://hochzeit.bertundbine.de/.well-known/security.txt

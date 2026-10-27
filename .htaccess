@@ -1,0 +1,61 @@
+# =========================================================
+# Apache Konfiguration für Hochzeit Bert + Sabine
+# =========================================================
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Route API Aufrufe an api.php weiter
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^api/(.*)$ api.php?route=$1 [QSA,L]
+
+  # 2. Falls Unterseiten aufgerufen werden
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^admin$ admin.html [L]
+</IfModule>
+
+# =========================================================
+# SICHERHEITS-HEADER (HTTP Security Headers)
+# =========================================================
+<IfModule mod_headers.c>
+  # HSTS (Strict-Transport-Security): Erzwingt HTTPS für 1 Jahr
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Schutz vor Clickjacking (Einbettung in fremde iframes)
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Schutz vor MIME-Sniffing
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Datenschutz bei ausgehenden Links (z. B. Google Maps)
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Browser-Berechtigungen einschränken (Kamera, Mikrofon, Geolocation)
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+  # Cross-Origin Policies
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "cross-origin"
+
+  # Content Security Policy (CSP): Erlaubt eigene Skripte & Google Fonts / Maps
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'self';"
+</IfModule>
+
+# =========================================================
+# SICHERHEIT: Direkten Zugriff auf sensible Dateien verbieten
+# =========================================================
+<FilesMatch "\.(db|json|csv|log|env|lock)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order Allow,Deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# Verzeichnis-Listing deaktivieren
+Options -Indexes

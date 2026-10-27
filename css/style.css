@@ -1,0 +1,1050 @@
+/* =========================================================
+   Hochzeit Bert + Sabine - Black & White Editorial Stationery Design
+   Inspired directly by the physical Save the Date card
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Fonts */
+  --font-serif: 'Bodoni Moda', 'Playfair Display', Georgia, serif;
+  --font-script: 'Alex Brush', cursive;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Black & White Stationery Palette */
+  --color-ink: #111111;
+  --color-ink-subtle: #2C2C2C;
+  --color-ink-muted: #555555;
+  --color-ink-light: #888888;
+
+  --color-paper: #FAFAF8;
+  --color-paper-card: #FFFFFF;
+  --color-paper-subtle: #F4F4F2;
+  --color-paper-alt: #EFEFEA;
+
+  --color-border: #E2E2DC;
+  --color-border-dark: #111111;
+  --color-border-light: #ECECE8;
+
+  /* Functional Status Accents (subtle monochrome & crisp accents) */
+  --color-success: #1E4620;
+  --color-success-bg: #F0F7F1;
+  --color-danger: #681A1A;
+  --color-danger-bg: #FDF2F2;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --shadow-paper: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --shadow-elevated: 0 12px 36px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.03);
+
+  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  line-height: 1.65;
+  min-height: 100vh;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
+}
+
+/* Subtle paper texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 50% 10%, rgba(0, 0, 0, 0.015) 0%, transparent 60%);
+  z-index: -1;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, .serif-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--color-ink);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  letter-spacing: 0.04em;
+}
+
+p {
+  color: var(--color-ink-muted);
+}
+
+.script-text {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  color: var(--color-ink);
+  font-weight: normal;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.tracked-caps {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* Navigation Bar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(250, 250, 248, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 100;
+  padding: 1.1rem 2rem;
+  transition: var(--transition);
+}
+
+.nav-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.nav-brand span.dot {
+  font-size: 1.2rem;
+  line-height: 0;
+  color: var(--color-ink-light);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--color-ink-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+
+.nav-links a:hover {
+  color: var(--color-ink);
+}
+
+.nav-btn-rsvp {
+  background: var(--color-ink) !important;
+  color: #FFFFFF !important;
+  padding: 0.55rem 1.3rem;
+  border-radius: var(--radius-xs);
+  letter-spacing: 0.18em !important;
+  border: 1px solid var(--color-ink);
+}
+
+.nav-btn-rsvp:hover {
+  background: #FFFFFF !important;
+  color: var(--color-ink) !important;
+}
+
+/* Container */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* =========================================================
+   HERO SECTION: Save the Date Card Representation
+   ========================================================= */
+.hero {
+  padding: 8rem 1.5rem 4.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* The Iconic Stationery Card */
+.save-the-date-card {
+  background: var(--color-paper-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-elevated);
+  width: 100%;
+  max-width: 440px;
+  padding: 3.5rem 2.8rem;
+  margin: 0 auto 3rem;
+  position: relative;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  min-height: 480px;
+  justify-content: space-between;
+  border-radius: var(--radius-xs);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.save-the-date-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.09);
+}
+
+/* "SAVE the DATE" Typography Block */
+.std-title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 0.95;
+  margin-top: 1rem;
+}
+
+.std-word {
+  font-family: var(--font-serif);
+  font-size: clamp(3.2rem, 8vw, 4.4rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  color: var(--color-ink);
+  text-transform: uppercase;
+}
+
+.std-script {
+  font-family: var(--font-script);
+  font-size: clamp(3rem, 7vw, 4.2rem);
+  color: var(--color-ink);
+  margin: -0.8rem 0 -0.4rem 0.6rem;
+  transform: rotate(-3deg);
+  line-height: 1;
+}
+
+/* Card Bottom Right: BERT + SABINE and 20 · 03 · 27 */
+.std-footer {
+  margin-top: 4rem;
+  align-self: flex-end;
+  text-align: right;
+  border-top: 1px solid var(--color-border-light);
+  padding-top: 1.5rem;
+  width: 100%;
+}
+
+.std-couple {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--color-ink);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.std-date {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-ink);
+}
+
+/* Back-of-card calligraph lead: "wir sagen ja" */
+.hero-script-lead {
+  font-family: var(--font-script);
+  font-size: clamp(3.2rem, 7vw, 4.8rem);
+  color: var(--color-ink);
+  margin-bottom: 0.5rem;
+  transform: rotate(-2deg);
+}
+
+.hero-subtext {
+  font-size: 1.15rem;
+  color: var(--color-ink-muted);
+  max-width: 580px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+/* Countdown Timer */
+.countdown-box {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  margin-bottom: 2.8rem;
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  background: var(--color-paper-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: 1rem 1.4rem;
+  min-width: 85px;
+  box-shadow: var(--shadow-paper);
+  text-align: center;
+}
+
+.countdown-number {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.countdown-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-ink-light);
+  margin-top: 0.4rem;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--color-ink);
+  color: #FFFFFF;
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-xs);
+  padding: 1rem 2.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  box-shadow: var(--shadow-paper);
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: #FFFFFF;
+  color: var(--color-ink);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.btn-secondary {
+  background: #FFFFFF;
+  color: var(--color-ink);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: 0.85rem 1.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-ink);
+  background: var(--color-paper-subtle);
+}
+
+.btn-sm {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+}
+
+/* General Sections */
+section {
+  padding: 6rem 0;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.section-header {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 3.5rem;
+}
+
+.section-tag {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--color-ink-light);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+/* =========================================================
+   RSVP SECTION
+   ========================================================= */
+.rsvp-section {
+  background: var(--color-paper-subtle);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 6.5rem 0;
+}
+
+.rsvp-card {
+  background: var(--color-paper-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: clamp(2rem, 5vw, 3.5rem);
+  box-shadow: var(--shadow-elevated);
+  max-width: 780px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.rsvp-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-ink);
+}
+
+/* Step 1: Code Input */
+.rsvp-login-step {
+  text-align: center;
+}
+
+.code-input-group {
+  display: flex;
+  gap: 0.8rem;
+  max-width: 460px;
+  margin: 2.2rem auto 1.2rem;
+}
+
+.code-input {
+  flex: 1;
+  padding: 0.95rem 1.2rem;
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  transition: var(--transition);
+}
+
+.code-input:focus {
+  outline: none;
+  border-color: var(--color-ink);
+  background: #FFFFFF;
+}
+
+.rsvp-help-text {
+  font-size: 0.9rem;
+  color: var(--color-ink-muted);
+}
+
+/* Alert Messages */
+.alert {
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-xs);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.alert-danger {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid rgba(104, 26, 26, 0.2);
+}
+
+.alert-info {
+  background: var(--color-paper-subtle);
+  color: var(--color-ink);
+  border: 1px solid var(--color-border);
+}
+
+/* Step 2: Greeting & Toggle */
+.guest-greeting-header {
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.guest-names-title {
+  font-size: 2rem;
+  color: var(--color-ink);
+  letter-spacing: 0.02em;
+}
+
+.badge-code {
+  background: var(--color-paper-subtle);
+  border: 1px solid var(--color-border);
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-ink);
+}
+
+/* Choice Decision Cards (Coming / Not Coming) */
+.decision-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+.toggle-option {
+  position: relative;
+}
+
+.toggle-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: 1.8rem 1.2rem;
+  text-align: center;
+  cursor: pointer;
+  background: var(--color-paper);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-card .icon {
+  font-size: 1.8rem;
+}
+
+.toggle-card .title {
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--color-ink);
+}
+
+.toggle-card:hover {
+  border-color: var(--color-ink);
+  background: #FFFFFF;
+}
+
+.toggle-option input[type="radio"]:checked + .toggle-card {
+  border-color: var(--color-ink);
+  background: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.toggle-option input[type="radio"]:checked + .toggle-card::after {
+  content: '✓ Ausgewählt';
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin-top: 0.5rem;
+}
+
+/* Attendees Cards */
+.attendees-section {
+  margin-bottom: 2.5rem;
+}
+
+.attendees-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.attendee-card {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: 1.6rem;
+  margin-bottom: 1.4rem;
+  position: relative;
+  transition: var(--transition);
+}
+
+.attendee-card:hover {
+  border-color: var(--color-ink-muted);
+}
+
+.attendee-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: 0.6rem;
+}
+
+.attendee-card-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  color: var(--color-ink);
+}
+
+.btn-remove-attendee {
+  background: transparent;
+  border: none;
+  color: var(--color-ink-light);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+
+.btn-remove-attendee:hover {
+  color: var(--color-ink);
+}
+
+/* Form Controls */
+.form-group {
+  margin-bottom: 1.3rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  color: var(--color-ink);
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  background: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  transition: var(--transition);
+}
+
+.form-input:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--color-ink);
+  box-shadow: 0 0 0 1px var(--color-ink);
+}
+
+.form-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* Food Menu Cards */
+.menu-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.6rem;
+}
+
+.dish-option {
+  position: relative;
+}
+
+.dish-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.dish-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: 1rem;
+  background: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  height: 100%;
+  transition: var(--transition);
+}
+
+.dish-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dish-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--color-ink);
+}
+
+.dish-tag {
+  font-size: 0.68rem;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--color-paper-subtle);
+  color: var(--color-ink);
+}
+
+.badge-meat, .badge-fish, .badge-veggie, .badge-vegan, .badge-kids {
+  background: var(--color-paper-subtle);
+  color: var(--color-ink);
+  border: 1px solid var(--color-border);
+}
+
+.dish-desc {
+  font-size: 0.8rem;
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+}
+
+.dish-option input[type="radio"]:checked + .dish-card {
+  border-color: var(--color-ink);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  background: var(--color-paper);
+}
+
+/* Submit Actions */
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  border-top: 1px solid var(--color-border-light);
+  padding-top: 2rem;
+}
+
+/* Confirmation Box */
+.confirmation-box {
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+.confirmation-icon {
+  font-size: 3rem;
+  margin-bottom: 1.2rem;
+}
+
+/* Location Cards */
+.location-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.2rem;
+}
+
+.location-card {
+  background: var(--color-paper-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: 2.4rem;
+  box-shadow: var(--shadow-paper);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  transition: var(--transition);
+}
+
+.location-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-ink-muted);
+  box-shadow: var(--shadow-elevated);
+}
+
+.location-type-badge {
+  align-self: flex-start;
+  border: 1px solid var(--color-ink);
+  color: var(--color-ink);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-xs);
+}
+
+.location-time {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-ink);
+}
+
+.location-address {
+  color: var(--color-ink-muted);
+  font-size: 0.95rem;
+}
+
+.location-btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1.5rem 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  width: 1px;
+  background: var(--color-border);
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 70px;
+  margin-bottom: 2.5rem;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-icon-bubble {
+  position: absolute;
+  left: 14px;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-paper-card);
+  border: 1px solid var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.timeline-time {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-ink);
+}
+
+.timeline-title {
+  font-size: 1.25rem;
+  margin-top: 0.2rem;
+  color: var(--color-ink);
+}
+
+/* FAQ Cards */
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.8rem;
+}
+
+.faq-card {
+  background: var(--color-paper-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: 2rem;
+  box-shadow: var(--shadow-paper);
+}
+
+.faq-question {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+  margin-bottom: 0.6rem;
+}
+
+/* Footer */
+footer {
+  background: var(--color-paper);
+  border-top: 1px solid var(--color-border);
+  padding: 5rem 1.5rem 3.5rem;
+  text-align: center;
+}
+
+.footer-names {
+  font-family: var(--font-sans);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin-bottom: 0.5rem;
+}
+
+.footer-script {
+  font-family: var(--font-script);
+  font-size: 2.6rem;
+  color: var(--color-ink);
+  margin-bottom: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin: 1.8rem 0;
+  list-style: none;
+}
+
+.footer-links a {
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--color-ink);
+}
+
+.footer-address {
+  font-size: 0.85rem;
+  color: var(--color-ink-light);
+  line-height: 1.6;
+  margin-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    padding-top: 6.5rem;
+  }
+
+  .save-the-date-card {
+    padding: 2.2rem 1.8rem;
+    min-height: auto;
+  }
+
+  .std-footer {
+    margin-top: 3rem;
+  }
+
+  .decision-toggle {
+    grid-template-columns: 1fr;
+  }
+
+  .code-input-group {
+    flex-direction: column;
+  }
+
+  .menu-options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline::before {
+    left: 18px;
+  }
+
+  .timeline-item {
+    padding-left: 52px;
+  }
+
+  .timeline-icon-bubble {
+    left: 4px;
+  }
+}

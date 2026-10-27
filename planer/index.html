@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tischplaner für die Hochzeit: Gäste verwalten, Tische anordnen und den Sitzplan als Text, PNG oder PDF exportieren.">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tischplaner · Bert &amp; Bine</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23a9663f'/%3E%3Ccircle cx='26' cy='32' r='12' fill='none' stroke='%23fff' stroke-width='3'/%3E%3Ccircle cx='38' cy='32' r='12' fill='none' stroke='%23fff' stroke-width='3' opacity='.7'/%3E%3C/svg%3E">
+  <script src="theme-init.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="19" cy="24" r="10" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="29" cy="24" r="10" stroke="currentColor" stroke-width="2.4" opacity=".55"/>
+        </svg>
+      </span>
+      <div class="brand-text">
+        <h1>Tischplaner</h1>
+        <p>Bert &amp; Bine · gemeinsame Gästeliste</p>
+      </div>
+    </div>
+
+    <nav class="admin-nav" aria-label="Admin-Bereiche">
+      <a href="../admin.html">Gästeverwaltung</a>
+      <a href="../personen.html">Personen</a>
+    </nav>
+
+    <div class="header-actions">
+      <span id="saveStatus" class="save-status" role="status" aria-live="polite">Bereit</span>
+      <div class="icon-group" role="group" aria-label="Verlauf">
+        <button id="undoBtn" class="icon-btn" type="button" title="Rückgängig (Strg+Z)" aria-label="Rückgängig" disabled>↶</button>
+        <button id="redoBtn" class="icon-btn" type="button" title="Wiederholen (Strg+Shift+Z)" aria-label="Wiederholen" disabled>↷</button>
+      </div>
+      <button id="themeBtn" class="icon-btn" type="button" title="Design wechseln" aria-label="Design wechseln">
+        <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
+        <span class="theme-icon theme-icon-sun" aria-hidden="true">☀</span>
+      </button>
+      <div class="menu scheme-picker">
+        <button id="schemeBtn" class="icon-btn scheme-btn" type="button" title="Farbschema wählen" aria-label="Farbschema wählen" aria-haspopup="true" aria-expanded="false">
+          <span class="scheme-dot" aria-hidden="true"></span>
+          <span class="chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="schemeMenu" class="dropdown scheme-menu" role="menu" aria-label="Farbschema" hidden>
+          <div class="dropdown-title">Farbschema</div>
+          <div id="schemeOptions" class="scheme-options"></div>
+        </div>
+      </div>
+      <div class="menu">
+        <button id="exportBtn" class="btn btn-primary" type="button" aria-haspopup="true" aria-expanded="false">
+          Exportieren <span class="chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="exportMenu" class="dropdown" role="menu" hidden>
+          <button type="button" role="menuitem" data-action="export-txt">
+            <span class="menu-icon" aria-hidden="true">≡</span> Textdatei (.txt)
+          </button>
+          <button type="button" role="menuitem" data-action="export-png">
+            <span class="menu-icon" aria-hidden="true">▧</span> Bild (.png)
+          </button>
+          <button type="button" role="menuitem" data-action="export-pdf">
+            <span class="menu-icon" aria-hidden="true">▤</span> PDF (.pdf)
+          </button>
+          <div class="dropdown-sep" role="separator"></div>
+          <button type="button" role="menuitem" data-action="save-json">
+            <span class="menu-icon" aria-hidden="true">↓</span> Projekt sichern (.json)
+          </button>
+          <button type="button" role="menuitem" data-action="import-json">
+            <span class="menu-icon" aria-hidden="true">↑</span> Projekt laden …
+          </button>
+          <div class="dropdown-sep" role="separator"></div>
+          <button type="button" role="menuitem" data-action="import-guests">
+            <span class="menu-icon" aria-hidden="true">＋</span> Gäste importieren (.json)
+          </button>
+          <button type="button" role="menuitem" data-action="export-guests">
+            <span class="menu-icon" aria-hidden="true">↓</span> Gäste exportieren (.json)
+          </button>
+          <div class="dropdown-sep" role="separator"></div>
+          <button type="button" role="menuitem" data-action="reset" class="danger">
+            <span class="menu-icon" aria-hidden="true">⌫</span> Alles zurücksetzen
+          </button>
+        </div>
+      </div>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+      <input type="file" id="importGuestsFile" accept="application/json,.json" hidden>
+    </div>
+  </header>
+
+  <div id="bootScreen" class="boot-screen">
+    <div class="boot-card">
+      <span class="boot-spinner" aria-hidden="true"></span>
+      <p id="bootMessage">Tischplan wird geladen …</p>
+      <button id="bootRetry" class="btn btn-primary" type="button" hidden>Erneut versuchen</button>
+    </div>
+  </div>
+
+  <main class="app">
+    <aside class="sidebar">
+      <section class="panel guests-panel" id="guestsPanel" aria-labelledby="guestsHeading">
+        <div class="panel-head">
+          <h2 id="guestsHeading">Gäste <span id="guestCount" class="count">0</span></h2>
+          <span id="openCount" class="muted small">0 ohne Platz</span>
+        </div>
+
+        <form id="guestForm" class="guest-form" autocomplete="off" hidden>
+          <input id="guestNameInput" type="text" placeholder="Name des Gastes" maxlength="80" aria-label="Name des Gastes" required>
+          <div class="guest-form-row">
+            <label class="check">
+              <input id="guestChildInput" type="checkbox">
+              <span>Kind</span>
+            </label>
+            <button class="btn btn-primary" type="submit">Hinzufügen</button>
+          </div>
+        </form>
+
+        <div class="guest-admin-bar">
+          <span class="muted small">Zentrale Gästeliste</span>
+          <a href="../personen.html" target="_blank" rel="noopener" class="mini-link">Personen verwalten ↗</a>
+          <button id="refreshGuestsBtn" class="icon-btn small" type="button" title="Gästeliste vom Server aktualisieren" aria-label="Gästeliste vom Server aktualisieren">⟳</button>
+        </div>
+
+        <div class="search-row">
+          <input id="guestSearch" type="search" placeholder="Gäste durchsuchen …" aria-label="Gäste durchsuchen">
+        </div>
+
+        <div id="guestStatusFilter" class="status-filter" role="group" aria-label="Nach Status filtern">
+          <button type="button" data-guest-status="all" class="active">Alle</button>
+          <button type="button" data-guest-status="attending">Zugesagt</button>
+          <button type="button" data-guest-status="pending">Offen</button>
+          <button type="button" data-guest-status="declined">Abgesagt</button>
+        </div>
+
+        <div id="guestAssignmentFilter" class="status-filter assignment-filter" role="group" aria-label="Nach Platzierung filtern">
+          <button type="button" data-assignment-filter="all" class="active">Alle Plätze</button>
+          <button type="button" data-assignment-filter="assigned">Zugeordnet</button>
+          <button type="button" data-assignment-filter="unassigned">Nicht zugeordnet</button>
+        </div>
+
+        <ul id="guestList" class="guest-list" aria-label="Gästeliste"></ul>
+
+        <div class="guest-drop-hint">
+          Hier ablegen, um die Tischzuordnung zu entfernen.
+        </div>
+      </section>
+
+      <section class="panel tables-panel" aria-labelledby="tablesHeading">
+        <div class="panel-head">
+          <h2 id="tablesHeading">Tische <span id="tableCount" class="count">0</span></h2>
+        </div>
+        <div class="table-add-row">
+          <button id="addTableBtn" class="btn btn-ghost btn-small" type="button" title="Rechteckigen Tisch anlegen">+ Rechteck</button>
+          <button id="addRoundTableBtn" class="btn btn-ghost btn-small" type="button" title="Runden Tisch anlegen">+ Rund</button>
+        </div>
+        <ul id="tableList" class="table-list" aria-label="Tischliste"></ul>
+      </section>
+    </aside>
+
+    <section class="canvas-area" id="canvasArea" aria-label="Tischplan">
+      <div class="board-toolbar">
+        <div class="zoom-group" role="group" aria-label="Zoom">
+          <button id="zoomOut" class="icon-btn" type="button" title="Herauszoomen" aria-label="Herauszoomen">−</button>
+          <button id="zoomLabel" class="zoom-label" type="button" title="Zoom zurücksetzen">100 %</button>
+          <button id="zoomIn" class="icon-btn" type="button" title="Hineinzoomen" aria-label="Hineinzoomen">+</button>
+        </div>
+        <label class="check snap-toggle">
+          <input id="snapToggle" type="checkbox" checked>
+          <span>Am Raster ausrichten</span>
+        </label>
+        <p class="toolbar-hint">Tische ziehen zum Verschieben · Gäste auf Stühle ziehen</p>
+      </div>
+
+      <div class="board-viewport" id="viewport">
+        <div class="board-scale" id="boardScale">
+          <div class="board" id="board">
+            <div class="tables-layer" id="tablesLayer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state" id="emptyState" hidden>
+        <div class="empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none">
+            <rect x="12" y="24" width="40" height="16" rx="5" stroke="currentColor" stroke-width="2"/>
+            <rect x="16" y="10" width="9" height="7" rx="2" stroke="currentColor" stroke-width="2" opacity=".6"/>
+            <rect x="28" y="10" width="9" height="7" rx="2" stroke="currentColor" stroke-width="2" opacity=".6"/>
+            <rect x="40" y="10" width="9" height="7" rx="2" stroke="currentColor" stroke-width="2" opacity=".6"/>
+            <rect x="16" y="47" width="9" height="7" rx="2" stroke="currentColor" stroke-width="2" opacity=".6"/>
+            <rect x="28" y="47" width="9" height="7" rx="2" stroke="currentColor" stroke-width="2" opacity=".6"/>
+            <rect x="40" y="47" width="9" height="7" rx="2" stroke="currentColor" stroke-width="2" opacity=".6"/>
+          </svg>
+        </div>
+        <h2>Noch keine Tische</h2>
+        <p>Lege den ersten Tisch an – rechteckig oder rund – und verteile anschließend eure Gäste.</p>
+        <div class="empty-actions">
+          <button id="emptyAddTable" class="btn btn-primary" type="button">Rechteckig</button>
+          <button id="emptyAddRoundTable" class="btn btn-ghost" type="button">Rund</button>
+        </div>
+      </div>
+
+      <aside id="inspector" class="inspector" aria-label="Tisch bearbeiten" hidden>
+        <div class="inspector-head">
+          <span class="inspector-title">Tisch bearbeiten</span>
+          <button id="closeInspector" class="icon-btn small" type="button" title="Schließen" aria-label="Tischauswahl schließen">×</button>
+        </div>
+
+        <div class="field-row">
+          <label for="tableNumberInput">Nummer</label>
+          <input id="tableNumberInput" class="number-input" type="number" min="1" step="1" inputmode="numeric">
+        </div>
+
+        <div class="field-row">
+          <span>Form</span>
+          <div class="shape-toggle" role="group" aria-label="Tischform">
+            <button type="button" data-table-shape="rect" aria-pressed="true">Rechteck</button>
+            <button type="button" data-table-shape="round" aria-pressed="false">Rund</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <span id="seatsLabel">Plätze je Seite</span>
+          <div class="stepper">
+            <button id="seatsMinus" type="button" aria-label="Weniger Plätze">−</button>
+            <span id="seatsValue">4</span>
+            <button id="seatsPlus" type="button" aria-label="Mehr Plätze">+</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <span>Drehung</span>
+          <div class="rotation-controls">
+            <button type="button" data-rotate="-15" aria-label="15 Grad gegen den Uhrzeigersinn">−15°</button>
+            <span id="rotationValue">0°</span>
+            <button type="button" data-rotate="15" aria-label="15 Grad im Uhrzeigersinn">+15°</button>
+            <button type="button" data-rotate="reset" class="mini-reset" title="Drehung zurücksetzen">0°</button>
+          </div>
+        </div>
+
+        <p id="tableSeatInfo" class="muted small inspector-info"></p>
+
+        <div class="inspector-actions">
+          <button id="duplicateTable" class="btn btn-ghost btn-small" type="button">Duplizieren</button>
+          <button id="deleteTable" class="btn btn-danger btn-small" type="button">Löschen</button>
+        </div>
+      </aside>
+
+      <div id="seatPopover" class="seat-popover" role="dialog" aria-label="Platz besetzen" hidden></div>
+    </section>
+  </main>
+
+  <dialog id="guestImportDialog" class="guest-dialog" aria-labelledby="guestImportTitle">
+    <h2 id="guestImportTitle">Gästeliste importieren</h2>
+    <p id="guestImportText" class="guest-import-text"></p>
+    <p class="guest-import-note">
+      <strong>Hinzufügen:</strong> bestehende Gäste und Tischzuordnungen bleiben erhalten.<br>
+      <strong>Ersetzen:</strong> die bisherige Gästeliste und alle Tischzuordnungen werden entfernt.
+    </p>
+    <div class="dialog-actions">
+      <button id="guestImportCancel" class="btn btn-ghost btn-small" type="button">Abbrechen</button>
+      <button id="guestImportReplace" class="btn btn-danger btn-small" type="button">Ersetzen</button>
+      <button id="guestImportAdd" class="btn btn-primary btn-small" type="button">Hinzufügen</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript>
+    <div class="noscript">Bitte aktiviere JavaScript, damit der Tischplaner funktioniert.</div>
+  </noscript>
+
+  <script src="app.js"></script>
+</body>
+</html>

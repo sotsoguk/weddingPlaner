@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Personenliste | Bert & Bine</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👥</text></svg>">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <header class="admin-header">
+    <div class="admin-title">
+      <span>Bine &amp; Bert</span>
+      <span>|</span>
+      <span>Personenliste</span>
+    </div>
+    <div class="admin-header-actions">
+      <a href="/" class="btn-admin btn-admin-secondary" target="_blank" rel="noopener">Zur Webseite ↗</a>
+      <a href="admin.html" class="btn-admin btn-admin-secondary">Gästeverwaltung</a>
+      <a href="gruppen.html" class="btn-admin btn-admin-secondary">Gruppen</a>
+      <a href="planer/index.html" class="btn-admin btn-admin-primary">Tischplan</a>
+      <a href="qrliste.html" class="btn-admin btn-admin-secondary">QR-Liste</a>
+      <button type="button" class="btn-admin btn-admin-danger" id="btn-admin-logout">Abmelden</button>
+    </div>
+  </header>
+
+  <div id="people-loading" class="admin-loading">Personenliste wird geladen …</div>
+
+  <main id="people-app" class="admin-container" style="display: none;">
+    <div class="card">
+      <div class="card-header people-toolbar">
+        <div>
+          <h3>👥 Gemeinsame Personenliste</h3>
+          <p class="people-subtitle">Diese Liste gilt für die Gästeverwaltung und den Tischplan.</p>
+        </div>
+        <div class="people-toolbar-actions">
+          <button type="button" class="btn-admin btn-admin-secondary" id="btn-sync-rsvp">Aus RSVP übernehmen</button>
+          <a href="gruppen.html" class="btn-admin btn-admin-secondary">Gruppen verwalten</a>
+          <button type="button" class="btn-admin btn-admin-primary" id="btn-add-person">+ Person</button>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="people-summary" id="people-summary"></div>
+
+        <div class="people-filter-bar">
+          <input type="text" id="people-search" class="search-input" placeholder="Name, Einladung oder Gruppe suchen …" aria-label="Personen durchsuchen">
+          <div class="status-filter-buttons">
+            <button type="button" class="filter-btn active" data-status="all">Alle</button>
+            <button type="button" class="filter-btn" data-status="attending">Zugesagt</button>
+            <button type="button" class="filter-btn" data-status="pending">Offen</button>
+            <button type="button" class="filter-btn" data-status="declined">Abgesagt</button>
+          </div>
+          <button type="button" class="btn-admin btn-admin-secondary" id="btn-refresh-people">Aktualisieren</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table people-table">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Name</th>
+                <th>Einladung</th>
+                <th>Tisch</th>
+                <th>Essen / Hinweise</th>
+                <th>Aktion</th>
+              </tr>
+            </thead>
+            <tbody id="people-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="person-modal-overlay" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <button type="button" id="person-modal-close" class="modal-close" aria-label="Dialog schließen">✕</button>
+      <h3 id="person-modal-title">Person</h3>
+      <form id="person-form" class="person-form" autocomplete="off">
+        <input type="hidden" id="person-key">
+        <div class="form-group">
+          <label class="form-label" for="person-name">Name *</label>
+          <input type="text" id="person-name" class="form-input" maxlength="80" required placeholder="Vor- und Nachname">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="person-code">Login-Code / Einladung</label>
+          <select id="person-code" class="form-input">
+            <option value="">— keine Zuordnung —</option>
+          </select>
+          <p class="form-hint">
+            Der Status ergibt sich aus der Rückmeldung dieser Einladung. Eine Einladung kann mehrere Personen enthalten.
+            <a href="gruppen.html" target="_blank" rel="noopener">Gruppen &amp; Codes verwalten ↗</a>
+            <button type="button" id="btn-refresh-group-options" class="mini-copy">Gruppen aktualisieren</button>
+          </p>
+          <p id="person-group-preview" class="person-group-preview"></p>
+        </div>
+        <div class="form-group">
+          <label class="check-inline">
+            <input type="checkbox" id="person-child">
+            <span>Kind</span>
+          </label>
+        </div>
+        <div id="person-form-error" class="form-error" style="display: none;"></div>
+        <div class="person-form-actions">
+          <button type="button" class="btn-admin btn-admin-secondary" id="person-cancel">Abbrechen</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Speichern</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="people-toast" class="admin-toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="js/personen.js"></script>
+</body>
+</html>

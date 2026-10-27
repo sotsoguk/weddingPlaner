@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Gruppen & Codes | Bert & Bine</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔑</text></svg>">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="admin-title">
+      <span>Bine &amp; Bert</span>
+      <span>|</span>
+      <span>Gruppen &amp; Codes</span>
+    </div>
+    <div class="admin-header-actions">
+      <a href="/" class="btn-admin btn-admin-secondary" target="_blank" rel="noopener">Zur Webseite ↗</a>
+      <a href="admin.html" class="btn-admin btn-admin-secondary">Gästeverwaltung</a>
+      <a href="personen.html" class="btn-admin btn-admin-secondary">Personen</a>
+      <a href="planer/index.html" class="btn-admin btn-admin-primary">Tischplan</a>
+      <button type="button" class="btn-admin btn-admin-danger" id="btn-admin-logout">Abmelden</button>
+    </div>
+  </header>
+
+  <div id="groups-loading" class="admin-loading">Gruppen werden geladen …</div>
+
+  <main id="groups-app" class="admin-container" style="display: none;">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3>Neue Gruppe / Einladung</h3>
+          <p class="people-subtitle">Eine Einladung = eine Gruppe. Der Login-Code wird automatisch aus drei deutschen Wörtern erzeugt.</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <form id="group-form" class="group-form" autocomplete="off">
+          <div class="group-form-grid">
+            <div class="form-group">
+              <label class="form-label" for="group-name">Familie / Einladung *</label>
+              <input class="form-input" type="text" id="group-name" maxlength="100" required placeholder="z. B. Familie Dorn">
+            </div>
+            <div class="form-group group-max-field">
+              <label class="form-label" for="group-max">Max. Personen</label>
+              <input class="form-input" type="number" id="group-max" min="1" max="20" step="1" value="2">
+            </div>
+            <div class="form-group group-submit-field">
+              <button class="btn-admin btn-admin-primary" type="submit">Gruppe mit Code anlegen</button>
+            </div>
+          </div>
+        </form>
+        <div id="group-result" class="group-result" hidden></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header people-toolbar">
+        <div>
+          <h3>Gruppen &amp; Einladungen</h3>
+          <p class="people-subtitle">Der Code gilt für alle Personen dieser Einladung. Der QR-Code führt direkt zur Gästeseite.</p>
+        </div>
+        <div class="people-toolbar-actions">
+          <button type="button" class="btn-admin btn-admin-secondary" id="btn-refresh-groups">Aktualisieren</button>
+          <a href="qrliste.html" class="btn-admin btn-admin-primary">QR-Liste drucken</a>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="admin-table groups-table">
+            <thead>
+              <tr>
+                <th>Familie / Einladung</th>
+                <th>Login-Code</th>
+                <th>Status</th>
+                <th>Personen</th>
+                <th>QR</th>
+                <th>Aktionen</th>
+              </tr>
+            </thead>
+            <tbody id="groups-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="group-modal-overlay" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <button type="button" id="group-modal-close" class="modal-close" aria-label="Dialog schließen">✕</button>
+      <h3 id="group-modal-title">Gruppe bearbeiten</h3>
+      <form id="group-edit-form" class="person-form" autocomplete="off">
+        <input type="hidden" id="edit-group-code">
+        <div class="form-group">
+          <label class="form-label" for="edit-group-name">Einladungsname *</label>
+          <input class="form-input" type="text" id="edit-group-name" maxlength="100" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="edit-group-max">Max. Personen</label>
+          <input class="form-input" type="number" id="edit-group-max" min="1" max="20" step="1">
+        </div>
+        <div id="group-edit-error" class="form-error" style="display: none;"></div>
+        <div class="person-form-actions">
+          <button type="button" class="btn-admin btn-admin-secondary" id="group-edit-cancel">Abbrechen</button>
+          <button type="submit" class="btn-admin btn-admin-primary">Speichern</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="groups-toast" class="admin-toast" role="status" aria-live="polite" hidden></div>
+  <script src="js/gruppen.js"></script>
+</body>
+</html>

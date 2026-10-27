@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>QR-Liste | Bert & Bine</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔲</text></svg>">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <header class="admin-header no-print">
+    <div class="admin-title">
+      <span>Bine &amp; Bert</span>
+      <span>|</span>
+      <span>QR-Liste</span>
+    </div>
+    <div class="admin-header-actions">
+      <a href="admin.html" class="btn-admin btn-admin-secondary">Gästeverwaltung</a>
+      <a href="personen.html" class="btn-admin btn-admin-secondary">Personen</a>
+      <a href="gruppen.html" class="btn-admin btn-admin-secondary">Gruppen &amp; Codes</a>
+      <a href="planer/index.html" class="btn-admin btn-admin-primary">Tischplan</a>
+      <button type="button" class="btn-admin btn-admin-danger" id="btn-admin-logout">Abmelden</button>
+    </div>
+  </header>
+
+  <div id="qr-loading" class="admin-loading">QR-Liste wird geladen …</div>
+
+  <main id="qr-app" class="admin-container" style="display: none;">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3>QR-Codes &amp; Login-Codes</h3>
+          <p class="people-subtitle">Für jede Einladung/Gruppe ein QR-Code und ein lesbarer Login-Code. Der QR-Code gilt für alle Personen dieser Gruppe.</p>
+        </div>
+        <div class="qr-print-actions no-print">
+          <a href="gruppen.html" class="btn-admin btn-admin-secondary">Gruppen bearbeiten</a>
+          <button type="button" class="btn-admin btn-admin-primary" id="btn-print-qr">Drucken / als PDF speichern</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <p id="qr-summary" class="people-summary"></p>
+        <div id="qr-sheet" class="qr-sheet-grid"></div>
+      </div>
+    </div>
+  </main>
+
+  <div id="qr-toast" class="admin-toast no-print" role="status" aria-live="polite" hidden></div>
+  <script src="js/qrliste.js"></script>
+</body>
+</html>
